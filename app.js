@@ -1,7 +1,7 @@
 const express = require('express');
-const createError = require('http-errors');
 const morgan = require('morgan');
 require('dotenv').config();
+const { notFoundHandler, errorHandler } = require('./middlewares/errorHandler');
 
 const app = express();
 app.use(express.json());
@@ -14,17 +14,11 @@ app.get('/', async (req, res, next) => {
 
 app.use('/api', require('./routes/api.route'));
 
-app.use((req, res, next) => {
-  next(createError.NotFound());
-});
+// Middleware to generate 404 error for undefined routes
+app.use(notFoundHandler);
 
-app.use((err, req, res, next) => {
-  res.status(err.status || 500);
-  res.send({
-    status: err.status || 500,
-    message: err.message,
-  });
-});
+// Error handling middleware
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => console.log(`🚀 @ http://localhost:${PORT}`));
