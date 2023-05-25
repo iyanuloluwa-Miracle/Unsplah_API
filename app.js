@@ -20,5 +20,5 @@ app.use(notFoundHandler);
 // Error handling middleware
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`🚀 @ http://localhost:${PORT}`));
