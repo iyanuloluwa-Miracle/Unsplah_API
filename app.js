@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 require('dotenv').config();
+
 const { notFoundHandler, errorHandler } = require('./middlewares/errorHandler');
 
 const app = express();
@@ -12,7 +13,7 @@ app.get('/', async (req, res, next) => {
   res.send({ message: 'Awesome it works 🐻' });
 });
 
-app.use('/api', require('./routes/api.route'));
+app.use('/api/upload', require('./routes/api.route'));
 
 // Middleware to generate 404 error for undefined routes
 app.use(notFoundHandler);
